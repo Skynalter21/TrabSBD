@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class UniversidadeController extends Controller
 {
-    private $faculdade;
-    private $lstSalas;
     /**
      * Display a listing of the resource.
      *
@@ -18,15 +16,13 @@ class UniversidadeController extends Controller
      */
     public function __construct()
     {
-        $this->faculdade = new Faculdade();
-        $this->lstSalas = new LstSalas();
+        
     }
 
     public function index()
     {
-
-        $faculdade = $this->faculdade->all();
-        return view('index', compact('faculdade'));
+        $faculdade = Faculdade::all();
+        return view('universidade.index', compact('faculdade'));
     }
 
     /**
@@ -36,10 +32,9 @@ class UniversidadeController extends Controller
      */
     public function create()
     {
-        $salas = $this->lstSalas->all();
-        $faculdade = $this->faculdade->all();
+        $salas = LstSalas::all();
 
-        return view('create', compact('salas','faculdade'));
+        return view('universidade.create', compact('salas'));
     }
 
     /**
@@ -50,14 +45,15 @@ class UniversidadeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->faculdade->create([
-            'sigla'=>$request->sigla,
-            'bloco'=>$request->bloco,
-            'orcamento'=>$request->orcamento,
-            'nome'=>$request->nome
+        // dd($request->toArray());
+        Faculdade::create([
+            'sigla' => $request->get('sigla'),
+            'bloco' => $request->get('bloco'),
+            'orcamento' => $request->get('orcamento'),
+            'nome' => $request->get('nome'),
         ]);
 
-        return view('index');
+        return redirect('faculdade');
     }
 
     /**
@@ -78,12 +74,11 @@ class UniversidadeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Faculdade $faculdade)
     {
-        $salas = $this->lstSalas->all();
-        $faculdade=$this->faculdade->find($id);
-        return view('create',compact('salas','faculdade'));
-
+        $salas = LstSalas::all();
+        
+        return view('universidade.edit', compact('salas', 'faculdade'));
     }
 
     /**
@@ -93,15 +88,16 @@ class UniversidadeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Faculdade $faculdade)
     {
-        $this->faculdade->where(['id'=>$id])->update([
-            'sigla'=>$request->sigla,
-            'bloco'=>$request->bloco,
-            'orcamento'=>$request->orcamento,
-            'nome'=>$request->nome
+        Faculdade::where('id', $faculdade->id)->update([
+            'sigla' => $request->get('sigla'),
+            'bloco' => $request->get('bloco'),
+            'orcamento' => $request->get('orcamento'),
+            'nome' => $request->get('nome'),
         ]);
 
+        return redirect('faculdade');
     }
 
     /**

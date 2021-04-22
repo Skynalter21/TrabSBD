@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('')->namespace('App\Http\Controllers')->name('universidade-controller')->group(static function() {
-Route::get('/',                             'UniversidadeController@index')->name('index');
-Route::get('faculdade/create',              'UniversidadeController@create')->name('create');
-Route::post('faculdade/',                            'UniversidadeController@store')->name('store');
-Route::get('{id}/edit',                            'UniversidadeController@edit')->name('edit');
-Route::put('/{faculdade}',                            'UniversidadeController@update')->name('update');
+Route::prefix('')->namespace('App\Http\Controllers')->name('app-controller-routes')->group(static function() {
+    Route::prefix('faculdade')->name('universidade-controller')->group(static function() {
+        Route::get('/',                             'UniversidadeController@index')->name('index');
+        Route::get('/create',                       'UniversidadeController@create')->name('create');
+        Route::post('/',                            'UniversidadeController@store')->name('store');
+        Route::get('/{faculdade}/edit',             'UniversidadeController@edit')->name('edit');
+        Route::post('/{faculdade}',                 'UniversidadeController@update')->name('update');
+    });
 });
 
 

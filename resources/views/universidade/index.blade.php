@@ -40,7 +40,7 @@
                         @endif
                         <td>
 {{--                            <a title ="Detalhe do faculdade" href = ""><i class="fas fa-eye text-primary mr-1"></i></a>--}}
-                            <a title ="Editar faculdade" href = "{{"/$fac->id/edit"}}"><i class="fas fa-edit text-info mr-1"></i></a>
+                            <a title ="Editar faculdade" href='{{ "faculdade/{$fac->id}/edit" }}'><i class="fas fa-edit text-info mr-1"></i></a>
                             <a href=""><i class="fas fa-trash text-danger mr-1"></i></a>
                         </td>
                     </tr>

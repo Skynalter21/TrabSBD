@@ -9,13 +9,12 @@ class Faculdade extends Model
 {
     protected $table = 'faculdade';
     protected $fillable = [
-        'idFaculdade',
+        'nome',
         'sigla',
         'bloco',
         'numAlunos',
         'numProfessor',
         'orcamento',
-        'nome'
     ];
 
     protected $appends = ['resource_url'];
